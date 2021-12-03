@@ -48,40 +48,46 @@ def indexpost():
 def cdump():
     return render_template('cargodump.html')
 
+def yeld_video_frame():
+    global cap
+    global last_frame 
+    cap = cv2.VideoCapture(0)
+    if cap.isOpened():
+        ret, img = cap.read()
+        last_frame = img
+        yield ret, img
+    cap.release()
+
+
 
 @socketio.on('check')
 def gen(json):
-    global cap
-    if cap is None:
-        cap = cv2.VideoCapture(-1)
-    while cap.isOpened():
-        ret, img = cap.read()
-        if ret:
            # img = cv2.resize(img, (0, 0), fx=0.5, fy=0.5)
-
-            images = find_pepper(img)
-            frames = []
-            for i, img in enumerate(images):
-                frame = cv2.imencode('.jpg', img)[1].tobytes()
-                frame = base64.encodebytes(frame).decode("utf-8")
-                socketio.emit('image'+str(i), frame)
-
-            num = get_sn_carriage(img)
-            if num:
-                print(num)
-                try:
-                    numn = int(num[0])
-                except ValueError:
-                    continue
-                print(numn)
-                socketio.emit('number', numn)
-            socketio.sleep(0.2)
-        else:
-            cap.release()
+    for ret, img in yeld_video_frame():
+        if not ret:
             break
+        ret, img = yeld_video_frame()
+        images = find_pepper(img)
+        frames = []
+        for i, img in enumerate(images):
+            frame = cv2.imencode('.jpg', img)[1].tobytes()
+            frame = base64.encodebytes(frame).decode("utf-8")
+            socketio.emit('image'+str(i), frame)
+
+        num = get_sn_carriage(img)
+        if num:
+            print(num)
+            try:
+                numn = int(num[0])
+            except ValueError:
+                pass
+                
+            print(numn)
+            socketio.emit('number', numn)
     cap.release()
-    cap = None
     print('exiting gen')
+
+# @socketio
 
 
 

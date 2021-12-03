@@ -128,7 +128,7 @@
 
 </body>
 <script type="text/javascript">
-    var socket = io.connect('http://' + document.domain + ':' + location.port);NT
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
     function getRandInt(min, max) {
         min = Math.ceil(min)
         max = Math.floor(max)
@@ -153,7 +153,7 @@
         crw = document.getElementById('cargow')
         console.log(msg)
         trnum.value = msg
-        cwr.value = getRandInt(65000, 67000)
+        crw.value = getRandInt(65000, 67000)
 
     })
 
