@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import TransportationCarriageLog, TransportationLog, CargoQualityAssessment
 from django.utils.html import mark_safe
 from django.utils.html import format_html
-from operations.operators.admin_forms import GroupPlateAdminForm, CargoQualityAdminForm
+from operators.admin_forms import GroupPlateAdminForm, CargoQualityAdminForm
 
 
 @admin.register(TransportationCarriageLog)

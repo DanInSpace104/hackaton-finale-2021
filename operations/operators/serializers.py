@@ -1,4 +1,4 @@
-from operations.operators.models import TransportationLog, TransportationCarriageLog, CargoQualityAssessment
+from operators.models import TransportationLog, TransportationCarriageLog, CargoQualityAssessment
 from rest_framework import serializers
 
 

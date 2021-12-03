@@ -1,5 +1,5 @@
 import os
-from operations.settings.settings import MEDIA_ROOT, BASE_DIR
+from settings.settings import MEDIA_ROOT, BASE_DIR
 
 
 class Uploader:

@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views import generic
 from .models import TransportationLog, TransportationCarriageLog, CargoQualityAssessment
 from rest_framework.generics import ListAPIView, ListCreateAPIView
-from operations.operators.serializers import TransportationLogSerializer, CarriageSerializer, CargoQualityAssessment
+from operators.serializers import TransportationLogSerializer, CarriageSerializer, CargoQualityAssessment
 
 
 class TransportationView(ListCreateAPIView):
