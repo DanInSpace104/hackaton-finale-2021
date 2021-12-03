@@ -9,10 +9,10 @@ from operators.admin_forms import GroupPlateAdminForm
 class CarriageAdmin(admin.ModelAdmin):
 
     def carriage_photo_image(self, obj):
-        return format_html('<img src="{}" />'.format(obj.carriage_photo.url))
+        return format_html('<img src="{}" />'.format(obj.carriage_photo.thumbnail.url))
 
     def quality_photo_image(self, obj):
-        return format_html('<img src="{}" />'.format(obj.carriage_quality_photo.url))
+        return format_html('<img src="{}" />'.format(obj.carriage_quality_photo.thumbnail.url))
 
     carriage_photo_image.short_description = 'Распознование номера вагона'
     quality_photo_image.short_description = 'Контроль качества сырья'

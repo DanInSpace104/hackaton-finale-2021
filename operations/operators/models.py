@@ -1,6 +1,7 @@
 from model_utils.models import TimeStampedModel
 # Create your models here.
 from django.conf import settings
+from stdimage import StdImageField
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_currentuser.middleware import get_current_authenticated_user
@@ -56,9 +57,12 @@ class TransportationCarriageLog(CreatedUpdatedBy):
     cargo_weight = models.CharField(max_length=255, verbose_name="Вес груза")
     carriage_number = models.CharField(max_length=255, unique=True, verbose_name="Номер состава")
     carriage_type = models.CharField(max_length=255, unique=True, verbose_name="Тип вагона")
-    carriage_photo = models.ImageField(upload_to='carriage', null=True)
+    carriage_photo = StdImageField(upload_to='carriage', blank=True,
+                                   variations={'thumbnail': (400, 320, True)}, null=True)
+    # carriage_photo = models.ImageField(upload_to='carriage', null=True)
     quality_control = models.IntegerField(verbose_name="Качество груза", null=True)
-    carriage_quality_photo = models.ImageField(upload_to='carriage_quality', null=True)
+    carriage_quality_photo = StdImageField(upload_to='carriage_quality', blank=True,
+                                           variations={'thumbnail': (400, 400, True)}, null=True)
 
     class Meta:
         verbose_name = 'Вагон '
