@@ -40,7 +40,7 @@ class CreatedUpdatedBy(TimeStampedModel):
 
 class TransportationLog(CreatedUpdatedBy):
     """ Aggregate all models into single table (automatic update) """
-    name = models.CharField(max_length=255, verbose_name="Имя компании")
+    name_organization = models.CharField(max_length=255, verbose_name="Имя компании")
     train_number = models.CharField(max_length=255, unique=True, verbose_name="Номера поезда")
     date = models.DateField(blank=True, null=True, verbose_name='Дата обновления')
 

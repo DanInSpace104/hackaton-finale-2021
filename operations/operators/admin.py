@@ -7,7 +7,7 @@ from operators.admin_forms import GroupPlateAdminForm
 
 @admin.register(TransportationCarriageLog)
 class CarriageAdmin(admin.ModelAdmin):
-
+    list_display = [ 'carriage_number', 'carriage_number']
     def carriage_photo_image(self, obj):
         return format_html('<img src="{}" />'.format(obj.carriage_photo.thumbnail.url))
 
