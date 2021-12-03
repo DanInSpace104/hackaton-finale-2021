@@ -7,7 +7,8 @@ from operators.admin_forms import GroupPlateAdminForm
 
 @admin.register(TransportationCarriageLog)
 class CarriageAdmin(admin.ModelAdmin):
-    list_display = [ 'carriage_number', 'carriage_number']
+    list_display = ['carriage_number', 'carriage_number']
+
     def carriage_photo_image(self, obj):
         return format_html('<img src="{}" />'.format(obj.carriage_photo.thumbnail.url))
 
@@ -45,7 +46,7 @@ class GroupPlatesApiNamesInlineAdmin(admin.TabularInline):
 
 @admin.register(TransportationLog)
 class TransportationAdmin(admin.ModelAdmin):
-    fields = ('name', 'train_number', 'date')
+    fields = ('name_organization', 'train_number', 'date')
 
     inlines = [GroupPlatesApiNamesInlineAdmin]
 

@@ -10,7 +10,6 @@ from rest_framework.generics import ListAPIView, ListCreateAPIView
 from operators.serializers import TransportationLogSerializer, CarriageSerializer
 import rest_framework.generics as generics
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework import status
 
 
