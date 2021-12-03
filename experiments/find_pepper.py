@@ -122,6 +122,7 @@ class Img:
             datos_rgb = cv2.mean(img, mask=circle_img)[::-1]
             ic(datos_rgb[3])
             if datos_rgb[3] < 70:
+                print('circle_found')
                 cv.circle(cimg, (i[0], i[1]), i[2], BLUE, 2)
                 # draw the center of the circle
                 cv.circle(cimg, (i[0], i[1]), 2, GREEN, 3)
@@ -133,17 +134,16 @@ class Img:
         return cimg
 
     def show(self, img=None, name='Image'):
+        if not HAS_DISPLAY:
+            return
         if img is None:
             img = self.img
-        cv.imshow(name, img)
+        try:
+            cv.imshow(name, img)
+        except:
+            return
         wait_esc()
         cv.destroyWindow(name)
-
-
-def show_image(img):
-    cv2.imshow('Display', img)
-    wait_esc()
-    cv.destroyWindow('Display')
 
 
 def find_pepper(path):
@@ -160,7 +160,18 @@ def find_pepper(path):
     img.show(img.start_img)
 
 
+def check_display():
+    try:
+        img = cv.imread('pictures/g1.jpg')
+        cv.imshow(img)
+        cv.destroyAllWindows()
+        return True
+    except:
+        return False
+
+
 if __name__ == '__main__':
+    HAS_DISPLAY = check_display()
     ic.disable()
     paths = ['pictures/g1.jpg', 'pictures/g2_clear.jpg', 'pictures/g3.jpg']
     ic(sys.argv)
@@ -169,4 +180,5 @@ if __name__ == '__main__':
 
     list(map(find_pepper, paths))
     # find_pepper()
-    cv.destroyAllWindows()
+    if HAS_DISPLAY:
+        cv.destroyAllWindows()
