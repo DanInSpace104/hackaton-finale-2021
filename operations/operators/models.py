@@ -56,24 +56,26 @@ class TransportationCarriageLog(CreatedUpdatedBy):
     cargo_weight = models.CharField(max_length=255, verbose_name="Вес груза")
     carriage_number = models.CharField(max_length=255, unique=True, verbose_name="Номер состава")
     carriage_type = models.CharField(max_length=255, unique=True, verbose_name="Тип вагона")
-    carriage_photo = models.ImageField(upload_to='carriage', )
+    carriage_photo = models.ImageField(upload_to='carriage', null=True)
+    quality_control = models.IntegerField(verbose_name="Качество груза", null=True)
+    carriage_quality_photo = models.ImageField(upload_to='carriage_quality', null=True)
 
     class Meta:
         verbose_name = 'Вагон '
         verbose_name_plural = 'Лог записи вагонов'
 
 
-class CargoQualityAssessment(CreatedUpdatedBy):
-    carriage = models.ForeignKey('operators.TransportationCarriageLog', blank=True, null=True,
-                                 on_delete=models.CASCADE,
-                                 related_name='carriage',
-                                 verbose_name='Вагон')
-    quality_control = models.IntegerField(verbose_name="Качество груза")
-    carriage_photo = models.ImageField(upload_to='carriage_quality')
-
-    class Meta:
-        verbose_name = 'Контроль качества вагонов'
-        verbose_name_plural = 'Контроль качества вагонов'
+# class CargoQualityAssessment(CreatedUpdatedBy):
+#     carriage = models.ForeignKey('operators.TransportationCarriageLog', blank=True, null=True,
+#                                  on_delete=models.CASCADE,
+#                                  related_name='carriage',
+#                                  verbose_name='Вагон')
+#     quality_control = models.IntegerField(verbose_name="Качество груза")
+#     carriage_photo = models.ImageField(upload_to='carriage_quality')
+#
+#     class Meta:
+#         verbose_name = 'Контроль качества вагонов'
+#         verbose_name_plural = 'Контроль качества вагонов'
 
 
 def upload_to(instance, filename):

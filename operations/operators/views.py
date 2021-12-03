@@ -5,9 +5,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
-from .models import TransportationLog, TransportationCarriageLog, CargoQualityAssessment
+from .models import TransportationLog, TransportationCarriageLog
 from rest_framework.generics import ListAPIView, ListCreateAPIView
-from operators.serializers import TransportationLogSerializer, CarriageSerializer, CargoQualityAssessment
+from operators.serializers import TransportationLogSerializer, CarriageSerializer
 
 
 class TransportationView(ListCreateAPIView):
@@ -20,6 +20,6 @@ class CarriageView(ListCreateAPIView):
     queryset = TransportationCarriageLog.objects.all()
 
 
-class CargoQualityAssesmentView(ListCreateAPIView):
-    serializer_class = CarriageSerializer
-    queryset = CargoQualityAssessment.objects.all()
+# class CargoQualityAssesmentView(ListCreateAPIView):
+#     serializer_class = CarriageSerializer
+#     queryset = CargoQualityAssessment.objects.all()

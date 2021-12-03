@@ -12,7 +12,7 @@ class GroupPlateAdminForm(ModelForm):
         fields = '__all__'
 
 
-class CargoQualityAdminForm(ModelForm):
-    class Meta:
-        model = models.CargoQualityAssessment
-        fields = '__all__'
+# class CargoQualityAdminForm(ModelForm):
+#     class Meta:
+#         model = models.CargoQualityAssessment
+#         fields = '__all__'

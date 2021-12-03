@@ -1,4 +1,4 @@
-from operators.models import TransportationLog, TransportationCarriageLog, CargoQualityAssessment
+from operators.models import TransportationLog, TransportationCarriageLog
 from rest_framework import serializers
 
 
@@ -16,8 +16,8 @@ class CarriageSerializer(serializers.ModelSerializer):
         extra_fields = []
 
 
-class CargoQualityAssessmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CargoQualityAssessment
-        fields = '__all__'
-        extra_fields = []
+# class CargoQualityAssessmentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = CargoQualityAssessment
+#         fields = '__all__'
+#         extra_fields = []
