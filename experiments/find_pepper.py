@@ -146,23 +146,27 @@ def show_image(img):
     cv.destroyWindow('Display')
 
 
-if __name__ == '__main__':
-    ic.disable()
-    path = 'pictures/g3.jpg'
-    ic(sys.argv)
-    if len(sys.argv) > 1:
-        path = sys.argv[1]
-
+def find_pepper(path):
     img = Img(path=path)
     img.preprocess()
     mask = img.get_mask()
     thr = img.threshold()
     img.cut_cart()
-    img.show()
+    # img.show()
     # cv.rectangle(img.img, (0, 0), img.img.shape[:2][::-1], WHITE, 50)
     # img.show()
 
     img.find_circles(on_origin=True)
     img.show(img.start_img)
 
+
+if __name__ == '__main__':
+    ic.disable()
+    paths = ['pictures/g1.jpg', 'pictures/g2_clear.jpg', 'pictures/g3.jpg']
+    ic(sys.argv)
+    if len(sys.argv) > 1:
+        path = sys.argv[1]
+
+    list(map(find_pepper, paths))
+    # find_pepper()
     cv.destroyAllWindows()
