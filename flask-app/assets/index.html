@@ -86,6 +86,8 @@
                         <input type="text" name="cargoweight" id="cargow">
                     </div>
                 </div>
+
+                <div class="col"><img id="image2"></div>
             </div>
             <div class="row p-4">
                 <div class="col-3 card border-primary stick">
@@ -115,9 +117,9 @@
                         Валерий
                     </div>
                 </div>
-                
+
             </div>
-            <div class = "col" style="float: right;">
+            <div class="col" style="float: right;">
                 <input type="submit" class="btn btn-lg btn-primary" value="Послать">
             </div>
         </form>
@@ -138,8 +140,12 @@
             data: 'User Connected'
         })
     });
-    socket.on('image', function (msg) {
+    socket.on('image1', function (msg) {
         const image_element = document.getElementById('image1');
+        image_element.src = "data:image/jpeg;base64," + msg;
+    });
+    socket.on('image2', function (msg) {
+        const image_element = document.getElementById('image2');
         image_element.src = "data:image/jpeg;base64," + msg;
     });
     socket.on('number', function (msg) {

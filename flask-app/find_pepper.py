@@ -32,10 +32,29 @@ class Img:
         self.start_img = imutils.resize(self.img, width=500)
         self.img = self.start_img
 
+    def center_crop(self, dim: tuple, img=None):
+        """Returns center cropped image
+
+        Args:Image Scaling
+        img: image to be center cropped
+        dim: dimensions (width, height) to be cropped from center
+        """
+        img = img or self.img
+        width, height = img.shape[1], img.shape[0]
+        # process crop width and height for max available dimension
+        crop_width = dim[0] if dim[0] < img.shape[1] else img.shape[1]
+        crop_height = dim[1] if dim[1] < img.shape[0] else img.shape[0]
+        mid_x, mid_y = int(width / 2), int(height / 2)
+        cw2, ch2 = int(crop_width / 2), int(crop_height / 2)
+        crop_img = img[mid_y - ch2 : mid_y + ch2, mid_x - cw2 : mid_x + cw2]
+        return crop_img
+
     def preprocess(self):
-        img = cv2.GaussianBlur(self.img, (5, 5), 0)
+        img = self.center_crop((200, 150))
+        # img = cv2.GaussianBlur(img, (5, 5), 0)
         img = cv.medianBlur(img, 5)
         self.img = cv2.GaussianBlur(img, (5, 5), 0)
+        return self.img.copy()
 
     def cut_cart(self):
         img = self.img
@@ -85,7 +104,7 @@ class Img:
     def thick_white_contours(self, img=None):
         img = img or self.img
         contours, hierarchy = cv2.findContours(img.astype(np.uint8), 1, 2)
-        cv2.drawContours(img, contours, -1, (255, 255, 255), thickness=5)
+        cv2.drawContours(img, contours, -1, (255, 255, 255), thickness=3)
         return img, contours, hierarchy
 
     def find_circles(self, img=None, on_origin=False):
@@ -97,7 +116,7 @@ class Img:
         # Second method-specific parameter. In case of CV_HOUGH_GRADIENT , it is the accumulator threshold for the circle centers at the detection stage. The smaller it is, the more false circles may be detected. Circles, corresponding to the larger accumulator values, will be returned first.
         param2 = 6
         #
-        minRadius = 8
+        minRadius = 5
         #
         maxRadius = 35
         img = img or self.img
@@ -132,7 +151,7 @@ class Img:
                     # draw the center of the circle
                     cv.circle(self.start_img, (i[0], i[1]), 2, GREEN, 3)
         self.img = cimg
-        return cimg
+        return cimg.copy()
 
     def show(self, img=None, name='Image'):
         if not HAS_DISPLAY:
@@ -146,20 +165,46 @@ class Img:
         wait_esc()
         cv.destroyWindow(name)
 
+    def center(self):
+        h, w = self.img.shape[:2]
+        return (h/2, w/2)
+
+    def draw_sniper(self):
+        center = self.center()
+        # print(center, self.img.shape)
+        point2 = tuple(map(int, (center[0]-30, center[1] - 50)))[::-1]
+        point1 = tuple(map(int, (center[0]+30, center[1] + 50)))[::-1]
+        # point2 = (center[0]+30, center[1] + 30)
+        # print(type(point1), point2)
+
+        cv2.rectangle(self.img, point1, point2, color=RED, thickness=4)
+        return self.img.copy()
+        # print(type(center), center)
+        # center = (150, 100)
+        # print(type(center), center)
+        # cv2.circle(self.img, center, 10, RED, 10)
+
 
 def find_pepper(img=None, path=None):
+    images = []
     img = Img(img=img, path=path)
-    img.preprocess()
+    images.append(img.start_img.copy())
+    # images.append(img.draw_sniper())
+    images.append(img.preprocess())
     mask = img.get_mask()
+    images.append(mask.copy())
+
     thr = img.threshold()
-    img.cut_cart()
+    images.append(thr.copy())
+
+    images.append(img.cut_cart())
+    img.thick_white_contours()
     # img.show()
     # cv.rectangle(img.img, (0, 0), img.img.shape[:2][::-1], WHITE, 50)
     # img.show()
 
-    img.find_circles(on_origin=True)
-    return img.img
-    return img.start_img
+    images.append(img.find_circles(on_origin=True))
+    return images
     # img.show(img.start_img)
 
 
@@ -174,7 +219,8 @@ def check_display():
 
 
 if __name__ == '__main__':
-    HAS_DISPLAY = check_display()
+    # HAS_DISPLAY = check_display()
+    HAS_DISPLAY = False
     ic.enable()
     paths = ['pictures/g1.jpg', 'pictures/g2_clear.jpg', 'pictures/g3.jpg']
     ic(sys.argv)

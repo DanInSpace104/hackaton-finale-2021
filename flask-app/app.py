@@ -28,6 +28,11 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/gallery')
+def galerry():
+    return render_template('gallery.html')
+
+
 @app.route('/index', methods= ['post'])
 def indexpost():
     if request.method == 'POST':
@@ -44,8 +49,6 @@ def cdump():
     return render_template('cargodump.html')
 
 
-    
-
 @socketio.on('check')
 def gen(json):
     global cap
@@ -55,10 +58,13 @@ def gen(json):
         ret, img = cap.read()
         if ret:
            # img = cv2.resize(img, (0, 0), fx=0.5, fy=0.5)
-            frame = find_pepper(img)
-            frame = cv2.imencode('.jpg', frame)[1].tobytes()
-            frame = base64.encodebytes(frame).decode("utf-8")
-            socketio.emit('image', frame)
+
+            images = find_pepper(img)
+            frames = []
+            for i, img in enumerate(images):
+                frame = cv2.imencode('.jpg', img)[1].tobytes()
+                frame = base64.encodebytes(frame).decode("utf-8")
+                socketio.emit('image'+str(i), frame)
 
             num = get_sn_carriage(img)
             if num:
@@ -69,7 +75,7 @@ def gen(json):
                     continue
                 print(numn)
                 socketio.emit('number', numn)
-            socketio.sleep(0.05)
+            socketio.sleep(0.2)
         else:
             cap.release()
             break
