@@ -21,8 +21,8 @@ SERVER_URL = 'http://95.181.198.19:8000'
 app = Flask(__name__, static_folder="./assets", template_folder='./assets')
 sio = SocketIO(app)
 
-pepper_room = []
 cargo_room = []
+weight_room = []
 
 cap = None
 latest_frame = None
@@ -37,22 +37,13 @@ def connect():
 def disconnect():
     print("I'm disconnected!", request.sid)
     try:
-        cargo_room.remove(request.sid)
+        weight_room.remove(request.sid)
     except ValueError:
         pass
     try:
-        pepper_room.remove(request.sid)
+        cargo_room.remove(request.sid)
     except ValueError:
         pass
-
-
-@sio.on('join_pepper')
-def join_pepper():
-    print('join_pepper', request.sid)
-    pepper_room.append(request.sid)
-    join_room('pepper_room')
-    if len(pepper_room) < 2:
-        sio.start_background_task(pepper_bg_thread)
 
 
 @sio.on('join_cargo')
@@ -60,24 +51,17 @@ def join_cargo():
     print('join_cargo', request.sid)
     cargo_room.append(request.sid)
     join_room('cargo_room')
-    if len(pepper_room) < 2:
+    if len(cargo_room) < 2:
         sio.start_background_task(cargo_bg_thread)
 
 
-def pepper_bg_thread():
-    mem = Client('localhost')
-    while True:
-        if len(pepper_room) == 0:
-            print('empty pepper room')
-            return
-        img = pickle.loads(mem.get('latest_frame'))
-        images = find_pepper(img)
-        frames = []
-        for name, img in images.items():
-            frame = cv2.imencode('.jpg', img)[1].tobytes()
-            frame = base64.encodebytes(frame).decode("utf-8")
-            sio.emit('image_' + name, frame, to='pepper_room')
-        sio.sleep(0.2)
+@sio.on('join_weight')
+def join_pepper():
+    print('join_weight', request.sid)
+    weight_room.append(request.sid)
+    join_room('weight_room')
+    if len(cargo_room) < 2:
+        sio.start_background_task(weight_bg_thread)
 
 
 def cargo_bg_thread():
@@ -87,9 +71,25 @@ def cargo_bg_thread():
             print('empty cargo room')
             return
         img = pickle.loads(mem.get('latest_frame'))
+        images = find_pepper(img)
+        frames = []
+        for name, img in images.items():
+            frame = cv2.imencode('.jpg', img)[1].tobytes()
+            frame = base64.encodebytes(frame).decode("utf-8")
+            sio.emit('image_' + name, frame, to='cargo_room')
+        sio.sleep(0.2)
+
+
+def weight_bg_thread():
+    mem = Client('localhost')
+    while True:
+        if len(weight_room) == 0:
+            print('empty weight room')
+            return
+        img = pickle.loads(mem.get('latest_frame'))
         frame = cv2.imencode('.jpg', img)[1].tobytes()
         frame = base64.encodebytes(frame).decode("utf-8")
-        sio.emit('cargo_image', frame)
+        sio.emit('weight_image', frame, to='weight_room')
 
         num = get_sn_carriage(img)
         if num:
@@ -100,7 +100,7 @@ def cargo_bg_thread():
                 pass
 
             print(numn)
-            sio.emit('cargo_number', numn, to='cargo_room')
+            sio.emit('weight_number', numn, to='weight_room')
         sio.sleep(0.2)
 
 
@@ -137,7 +137,7 @@ def indexpost():
     global latest_frame
     if request.method == 'POST':
         data = {
-            "cargo_weight": 1,
+            "pepper_weight": 1,
             "carriage_number": "1",
             "carriage_type": "1",
             # "carriage_photo": "",
@@ -156,7 +156,7 @@ def indexpost():
         # data.update(request.form)
         # trainnum = request.form.get('trainnum')
 
-        # cargoweight = request.form.get('cargoweight')
+        # pepperweight = request.form.get('pepperweight')
         # carrtype = request.form.get('carrtype')
         # carrnum = request.form.get('carrnum')
     else:
@@ -168,12 +168,8 @@ def indexpost():
 
 @app.route('/cdump')
 def cdump():
-    return render_template('cargodump.html')
+    return render_template('pepperdump.html')
 
-
-def get_video_frame():
-    frame = mem.get('latest_frame')
-    return frame
 
 
 if __name__ == '__main__':

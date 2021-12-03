@@ -64,7 +64,7 @@
                 </h1>
             </div>
             <div class="col-3">
-                <img id="image1">
+                <img id="image1" class="border-primary">
             </div>
 
         </div>
@@ -129,6 +129,7 @@
 </body>
 <script type="text/javascript">
     var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var lastValue = 0
     function getRandInt(min, max) {
         min = Math.ceil(min)
         max = Math.floor(max)
@@ -136,9 +137,9 @@
     }
 
     socket.on('connect', function () {
-        socket.emit('join_pepper')
+        socket.emit('join_weight')
     });
-    socket.on('image_result', function (msg) {
+    socket.on('weight_image', function (msg) {
         const image_element = document.getElementById('image1');
         image_element.src = "data:image/jpeg;base64," + msg;
     });
@@ -146,14 +147,16 @@
     //     const image_element = document.getElementById('image2');
     //     image_element.src = "data:image/jpeg;base64," + msg;
     // });
-    // socket.on('number', function (msg) {
-    //     trnum = document.getElementById('carrnum')
-    //     crw = document.getElementById('cargow')
-    //     console.log(msg)
-    //     trnum.value = msg
-    //     crw.value = getRandInt(65000, 67000)
+    socket.on('weight_number', function (msg) {
+        trnum = document.getElementById('carrnum')
+        crw = document.getElementById('cargow')
+        if (lastValue != msg) {
+            trnum.value = msg
+            crw.value = getRandInt(65000, 67000)
+            lastValue = msg
+        }
 
-    // })
+    })
 
 </script>
 
