@@ -48,7 +48,7 @@
 
         <div class="main-menu">
             <div class="main-menu-item ">
-                <a href="#" class="main-menu-link">○ Контроль</a>
+                <a href="#" class="main-menu-link">○ Весовой контроль</a>
             </div>
         </div>
     </div>
@@ -56,23 +56,23 @@
 
     <div class="main-content container">
         <div class="row">
-            <div class="col">
+            <div class="col p-3">
                 <h1 style="color: white;">Система весового контроля
                 </h1>
             </div>
-            <div class="col">
+            <div class="col-3">
                 <img id="image1">
             </div>
 
         </div>
         <form method="post">
-            <div class="row">
+            <div class="row p-4">
                 <div class="col-3 card border-primary stick">
                     <div class="card-header">
                         <label>Номер состава</label>
                     </div>
                     <div class="card-body">
-                        <input type="text">
+                        <input type="text" name="trainnum">
                     </div>
                 </div>
                 <div class="col-3 card border-primary stick">
@@ -80,17 +80,17 @@
                         <label>Вес груза</label>
                     </div>
                     <div class="card-body">
-                        <input type="text">
+                        <input type="text" name="cargoweight">
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row p-4">
                 <div class="col-3 card border-primary stick">
                     <div class="card-header">
                         <label>Тип вагона</label>
                     </div>
                     <div class="card-body">
-                        <input type="text">
+                        <input type="text" name="carrtype">
                     </div>
                 </div>
                 <div class="col-3 card border-primary stick">
@@ -98,12 +98,12 @@
                         <label>Номер вагона</label>
                     </div>
                     <div class="card-body">
-                        <input type="text">
+                        <input type="text" name="carrnum" id="carrnum">
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-2 card border-primary stick">
+            <div class="row p-4">
+                <div class="col-2 mr-auto card border-primary stick">
                     <div class="card-header">
                         <img src="assets/favicon/open-iconic-master/svg/person.svg">
                         Оператор
@@ -112,9 +112,10 @@
                         Валерий
                     </div>
                 </div>
-                <div class="col-2 stick">
-                    <input type="submit" class="btn btn-lg btn-primary" value="Послать">
-                </div>
+                
+            </div>
+            <div class = "col" style="float: right;">
+                <input type="submit" class="btn btn-lg btn-primary" value="Послать">
             </div>
         </form>
 
@@ -133,6 +134,11 @@
         const image_element = document.getElementById('image1');
         image_element.src = "data:image/jpeg;base64," + msg;
     });
+    socket.on('number', function (msg) {
+        trnum = document.getElementById('carrnum')
+        console.log(msg)
+        trnum.value = msg
+    })
 
 </script>
 

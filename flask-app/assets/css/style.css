@@ -9,7 +9,7 @@ body {
 
 body {
     font-size: 16px;
-    font-family: 'Open Sans';
+    font-family: 'SKC';
 }
 
 #root {
@@ -184,7 +184,7 @@ body {
 }
 
 .main-menu-link {
-    font-family: Lato;
+    font-family: SKC;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -229,7 +229,7 @@ body {
 }
 
 .description-title-page {
-	font-family: Lato;
+	font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 36px;
@@ -239,7 +239,7 @@ body {
 }
 
 .page-title {
-	font-family: Lato;
+	font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 24px;
@@ -249,7 +249,7 @@ body {
 }
 
 .page-section-header {
-    font-family: Lato;
+    font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 20px;
@@ -271,7 +271,7 @@ body {
 
 .form-field .label-field {
 	display: block;
-	font-family: Lato;
+	font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 14px;
@@ -307,7 +307,7 @@ body {
 }
 
 .files-item-name {
-	font-family: Lato;
+	font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 14px;
@@ -352,7 +352,7 @@ body {
 }
 
 .table-files-errors {
-	font-family: Lato;
+	font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	text-align: left;
@@ -402,7 +402,7 @@ body {
 }
 
 .region-table {
-	font-family: Lato;
+	font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	text-align: left;
@@ -486,7 +486,7 @@ body {
 }
 
 .login-form-wrapper .subtitle {
-	font-family: Lato;
+	font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	color: #f8f32b;
@@ -509,7 +509,7 @@ h1 {
 /* buttons */
 
 .button {
-	font-family: Lato;
+	font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 14px;
@@ -713,7 +713,7 @@ h1 {
 	width:170px;
 	text-align:center;
 	display:block;
-	font-family: arial;
+	font-family: SKC;
 	text-decoration: none;
 	font-weight: 300;
 	font-size: 14px;
@@ -767,7 +767,7 @@ h1 {
 }
 
 .popup-title {
-	font-family: Open Sans;
+	font-family: SKC;
 	font-style: normal;
 	font-weight: normal;
 	font-size: 24px;
@@ -948,7 +948,7 @@ h1 {
 .recent-sheet-item {
 	border-bottom: 1px solid #a09999;
 	position: relative;
-	font-family: Lato;
+	font-family: SKC;
 	font-size: 14px;
     padding: 24px 26px 8px;
 	background: #FBFBFB;
@@ -957,7 +957,7 @@ h1 {
 
 .recent-sheet-date {
 	position: absolute;
-	font-family: Lato;
+	font-family: SKC;
 	font-size: 14px;
 	color: #333333;
 	opacity: .5;
@@ -969,7 +969,7 @@ h1 {
 	text-align: center;
 	color: #828282;
 	padding: 10px 0;
-	font-family: Lato;
+	font-family: SKC;
 	font-size: 14px;
 }
 
@@ -988,7 +988,7 @@ h1 {
 
 .file-check {
 	display: flex;
-    font-family: Lato;
+    font-family: SKC;
     font-size: 14px;
     color: #333;
     padding: 12px 30px 12px 0;
@@ -1185,7 +1185,7 @@ h1 {
 	cursor: pointer;
 	text-align:center;
 
-	font-family: arial;
+	font-family: SKC;
 	text-decoration: none;
 
 	font-size: 14px;
@@ -1231,3 +1231,8 @@ h1 {
 	padding: 10px;
 	margin: 20px
 }
+
+@font-face {
+    font-family: SKC; /* Гарнитура шрифта */
+    src: url(../fonts/SKConcreticaRegular.ttf); /* Путь к файлу со шрифтом */
+   }
