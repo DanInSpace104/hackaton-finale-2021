@@ -39,6 +39,11 @@ def indexpost():
     requests.post(SERVER_URL, message)
 
 
+@app.route('/cdump')
+def cdump():
+    return render_template('cargodump.html')
+
+
     
 
 @socketio.on('check')
