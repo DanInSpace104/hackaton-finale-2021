@@ -137,7 +137,7 @@ class Img:
         )
         if circles is None:
             ic('Circles not found')
-            return self.img
+            return 0, self.img
 
         circles = np.uint16(np.around(circles))
         for i in circles[0, :]:
@@ -147,11 +147,11 @@ class Img:
             ic(datos_rgb[3])
             if datos_rgb[3] < 70:
                 # print('circle_found')
-                cv.circle(cimg, (i[0], i[1]), i[2], BLUE, 2)
+                cv.circle(cimg, (i[0], i[1]), i[2], RED, 2)
                 # draw the center of the circle
                 cv.circle(cimg, (i[0], i[1]), 2, GREEN, 3)
                 if on_origin:
-                    cv.circle(self.start_img, (i[0], i[1]), i[2], BLUE, 2)
+                    cv.circle(self.start_img, (i[0], i[1]), i[2], RED, 2)
                     # draw the center of the circle
                     cv.circle(self.start_img, (i[0], i[1]), 2, GREEN, 3)
         self.img = cimg

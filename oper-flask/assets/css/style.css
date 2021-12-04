@@ -1,0 +1,355 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+	background-color: #002137
+}
+
+body {
+    font-size: 16px;
+    font-family: 'SKC';
+}
+
+#root {
+    display: flex;
+    align-items: stretch;
+    min-height: 100%;
+}
+
+.left-panel {
+    background: #051945;
+    width: 250px;
+    box-shadow: 10px 0px 20px rgba(0, 0, 0, .15);
+	display: flex;
+	flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+	z-index: 9;
+	height: calc(100vh - 0px);
+}
+
+.left-panel-scroll {
+	overflow-y: auto;
+	display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.main-content {
+    flex-grow: 1;
+    margin-left: 250px;
+}
+
+.main-subcontent {
+	padding: 20px;
+}
+
+.logo-area {
+    padding: 28px 50px 14px;
+}
+
+.logo-desc {
+    color: #FFFFFF;
+    font-size: 12px;
+    padding-top: 8px;
+}
+
+.logo-button {
+    padding: 74px 50px;
+}
+
+.bg-blue {
+    background: #2B2D42;
+}
+
+.bg-yellow {
+    background: #F8F32B;
+}
+
+.bg-gray {
+    background: #8892AA;
+}
+
+.bg-white {
+    background: #FFFFFF;
+}
+
+.bg-main {
+	background: #232435 url('../img/home-bg.png');
+    background-size: cover;
+}
+
+.title-page {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	flex-direction: column;
+}
+
+.main-menu {
+	flex-grow: 1;
+}
+
+
+
+.main-menu-link {
+    font-family: SKC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: #fff;
+    opacity: .5;
+    text-decoration: none;
+    display: block;
+    padding-left: 50px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+	padding-right: 12px;
+}
+
+.main-menu-submenu .main-menu-link {
+	padding-left: 60px;
+}
+
+.subsubmenu {
+	padding-left: 10px;
+}
+
+.main-menu-link:hover {
+	background: #3A3E58;
+	color: #F8F32B;
+	text-decoration: none;
+}
+
+.main-menu-active-link {
+	background: #3B3F5D;
+}
+
+.main-menu-submenu .main-menu-active-link {
+	background: #3D4365;
+}
+
+.main-menu-submenu {
+	display: none;
+}
+
+.main-menu-submenu.main-menu-open {
+	display: block;
+}
+
+.description-title-page {
+	font-family: SKC;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 36px;
+	color: #fff;
+	max-width: 600px;
+	margin-top: 50px;
+}
+
+.page-title {
+	font-family: SKC;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 24px;
+	color: #828282;
+	background: #F2F2F2;
+	padding: 16px;
+}
+
+.page-section-header {
+    font-family: SKC;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 20px;
+	color: #828282;
+	padding: 10px;
+}
+
+
+
+.preload-page.active-preloader {
+	display: block;
+}
+
+.login-form .form-submit {
+	cursor: pointer;
+	background: #65CA00;
+	box-shadow: 0px 3px 0px #53A700;
+	border-radius: 4px;
+	border: 0;
+	padding: 8px;
+	color: #fff;
+	float: right;
+}
+
+.login-form {
+	display: flex;
+    flex-wrap: wrap;
+    max-width: 400px;
+    box-sizing: border-box;
+	margin: 12px;
+}
+
+.main-content.login-form-wrapper {
+    margin-left: 0;
+}
+
+.login-form-wrapper .title-page-logo {
+	max-width: 400px;
+}
+
+.login-form-wrapper .description-title-page {
+	max-width: 400px;
+	font-size: 20px;
+	margin-top: 8px;
+}
+
+.login-form-wrapper .subtitle {
+	font-family: SKC;
+	font-style: normal;
+	font-weight: normal;
+	color: #f8f32b;
+	max-width: 400px;
+	font-size: 18px;
+	margin-top: 8px;
+	margin-bottom: -10px;
+}
+
+.login-form .form-field {
+	margin-right: 0;
+	flex-grow: 1;
+}
+
+h1 {
+	margin: 0;
+	font-weight: bold;
+}
+
+/* buttons */
+
+.popup-content .form-field {
+	margin: 0;
+}
+
+.title-page-logo {
+	max-width: 600px;
+}
+
+.logo {
+	position: relative;
+}
+
+.logo-suffix {
+	position: absolute;
+	font-size: 16px;
+	font-weight: bold;
+	color: #fff;
+	right: 0;
+    top: 0;
+}
+
+.popup-content > * {
+	margin-bottom: 20px;
+}
+
+.theme-dark .page-title {
+	background: #2B2D42;
+	color: rgba(255, 255, 255, 0.25);
+}
+
+
+.logo-area img {
+	max-width: 150px;
+}
+
+.main-menu-item {
+	position: relative;
+}
+
+
+
+
+.text-small {
+	font-size: 12px;
+}
+
+.login-form-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+
+
+
+
+@media (min-width: 768px) {
+	.hide-show-menu {
+		display: none;
+	}
+}
+
+@media (max-width: 768px) {
+	.left-panel {
+		left: -250px;
+		transition: left 1s;
+	}
+	.main-content {
+		margin-left: 0;
+	}
+	.hide-show-menu {
+		display: block;
+		position: absolute;
+		background-image: url(../img/show-menu.png);
+		width: 40px;
+		right: -40px;
+		top: 0;
+		height: 40px;
+		background-size: cover;
+		cursor: pointer;
+	}
+	.show-left-panel .hide-show-menu {
+		background-image: url(../img/hide-menu.png);
+	}
+
+	.left-panel.show-left-panel {
+		left: 0;
+	}
+
+	.left-panel.show-left-panel ~ .main-content {
+		margin-left: 250px;
+	}
+	.login-form-wrapper .title-page-logo {
+		max-width: 100%;
+	}
+
+	.login-form-wrapper .description-title-page {
+		max-width: 100%;
+		font-size: 20px;
+		margin-top: 8px;
+	}
+	.login-form {
+		max-width: 100%;
+	}
+	.login-form-wrapper {
+		padding: 16px;
+		max-width: 100%;
+	}
+}
+
+.stick {
+	padding: 10px;
+	margin: 20px
+}
+
+@font-face {
+    font-family: SKC; /* Гарнитура шрифта */
+    src: url(../fonts/SKConcreticaRegular.ttf); /* Путь к файлу со шрифтом */
+   }

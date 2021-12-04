@@ -2,6 +2,7 @@ import base64
 import json
 import pickle
 import queue
+import random
 import threading
 
 import cv2
@@ -20,7 +21,6 @@ SERVER_URL = 'http://95.181.198.19:8000'
 
 app = Flask(__name__, static_folder="./assets", template_folder='./assets')
 sio = SocketIO(app)
-
 cargo_room = []
 weight_room = []
 
@@ -73,7 +73,7 @@ def cargo_bg_thread():
         img = pickle.loads(mem.get('latest_frame'))
         percent, images = find_pepper(img)
         img = images['result']
-        mem.set('vagon1:trash_percent', percent)
+        mem.set('vagon1:trash_percent', str(percent))
         # for name, img in images.items():
         frame = cv2.imencode('.jpg', img)[1].tobytes()
         frame = base64.encodebytes(frame).decode("utf-8")
@@ -90,10 +90,11 @@ def weight_bg_thread():
         if len(weight_room) == 0:
             print('empty weight room')
             return
-        img = pickle.loads(mem.get('latest_frame'))
+        img = pickle.loads(mem.get('number_frame'))
         frame = cv2.imencode('.jpg', img)[1].tobytes()
         frame = base64.encodebytes(frame).decode("utf-8")
         mem.set('vagon1:number_image', frame)
+        mem.set('vagon1:cart_weight', 60000 + random.random() * 10000)
         sio.emit('weight_image', frame, to='weight_room')
 
         num = get_sn_carriage(img)
@@ -105,6 +106,7 @@ def weight_bg_thread():
                 pass
 
             print(numn)
+            mem.set('vagon1:cart_number', str(numn))
             sio.emit('weight_number', numn, to='weight_room')
         sio.sleep(0.2)
 

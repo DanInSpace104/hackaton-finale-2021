@@ -18,14 +18,19 @@ def get_data():
     # данные по вагону: процент брака, вес вагона, номер вагона
     print('get_data')
     mem = Client('localhost')
-    data = {
-        'trash_image': mem.get('vagon1:trash_image').decode('utf-8'),
-        'number_image': mem.get('vagon1:number_image').decode('utf-8'),
-        'trash_percent': mem.get('vagon1:trash_percent'),
-        'cart_number': mem.get('vagon1:cart_number'),
-        'cart_weight': mem.get('vagon1:cart_weight'),
-    }
-    sio.emit('data', data)
+
+    def get_data():
+        sio.sleep(1)
+        return {
+            'trash_image': mem.get('vagon1:trash_image').decode('utf-8'),
+            'number_image': mem.get('vagon1:number_image').decode('utf-8'),
+            'trash_percent': mem.get('vagon1:trash_percent').decode(),
+            'cart_number': mem.get('vagon1:cart_number').decode(),
+            'cart_weight': mem.get('vagon1:cart_weight').decode(),
+        }
+
+    # print(mem.get('vagon1:cart_number').decode())
+    sio.emit('data', {0: get_data(), 1: get_data(), 2: get_data()})
 
 
 @app.route('/')
