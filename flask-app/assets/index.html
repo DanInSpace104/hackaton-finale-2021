@@ -57,20 +57,19 @@
     </div>
 
 
-    <div class="main-content container">
+    <div class="main-content container" style="display: flex; justify-content: space-around;">
+        <div>
         <div class="row">
-            <div class="col p-3">
+            <div class="col">
                 <h1 style="color: white;">Система весового контроля
                 </h1>
             </div>
-            <div class="col-3">
-                <img id="image1" class="border-primary">
-            </div>
+           
 
         </div>
         <form method="post">
-            <div class="row p-4">
-                <div class="col-3 card border-primary stick">
+            <div class="row">
+                <div class="col card border-primary stick">
                     <div class="card-header">
                         <label>Номер состава</label>
                     </div>
@@ -78,7 +77,7 @@
                         <input type="text" name="train">
                     </div>
                 </div>
-                <div class="col-3 card border-primary stick">
+                <div class="col card border-primary stick">
                     <div class="card-header">
                         <label>Вес груза</label>
                     </div>
@@ -87,10 +86,10 @@
                     </div>
                 </div>
 
-                <div class="col"><img id="image2"></div>
+                <!--<div class="col"><img id="image2"></div> -->
             </div>
-            <div class="row p-4">
-                <div class="col-3 card border-primary stick">
+            <div class="row">
+                <div class="col card border-primary stick">
                     <div class="card-header">
                         <label>Тип вагона</label>
                     </div>
@@ -98,7 +97,7 @@
                         <input type="text" name="carriage_type">
                     </div>
                 </div>
-                <div class="col-3 card border-primary stick">
+                <div class="col card border-primary stick">
                     <div class="card-header">
                         <label>Номер вагона</label>
                     </div>
@@ -107,22 +106,26 @@
                     </div>
                 </div>
             </div>
-            <div class="row p-4">
-                <div class="col-2 mr-auto card border-primary stick">
+            <div class="row">
+                <div class="col mr-auto card border-primary stick">
                     <div class="card-header">
                         <img src="assets/favicon/open-iconic-master/svg/person.svg">
                         Оператор
                     </div>
                     <div class="card-body">
-                        Валерий
+                        Валерий Макаров
                     </div>
+                </div>
+                <div class="col" style="display: flex; justify-content: center; align-items: center;">
+                    <input type="submit" class="btn btn-primary" value="Послать" style="position: relative; ">
                 </div>
 
             </div>
-            <div class="col" style="float: right;">
-                <input type="submit" class="btn btn-lg btn-primary" value="Послать">
-            </div>
-        </form>
+        </div>
+    </form>
+    <div>
+        <img id="image1" class="border-primary">
+    </div>
 
     </div>
 

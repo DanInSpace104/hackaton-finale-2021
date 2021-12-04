@@ -56,7 +56,7 @@ def join_cargo():
 
 
 @sio.on('join_weight')
-def join_pepper():
+def join_weight():
     print('join_weight', request.sid)
     weight_room.append(request.sid)
     join_room('weight_room')
@@ -137,7 +137,7 @@ def indexpost():
     global latest_frame
     if request.method == 'POST':
         data = {
-            "pepper_weight": 1,
+            "cargo_weight": 1,
             "carriage_number": "1",
             "carriage_type": "1",
             # "carriage_photo": "",
@@ -168,7 +168,7 @@ def indexpost():
 
 @app.route('/cdump')
 def cdump():
-    return render_template('pepperdump.html')
+    return render_template('cargodump.html')
 
 
 
