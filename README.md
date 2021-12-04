@@ -1,5 +1,5 @@
 # Развёртывание
-## Сервер оператора:
+## А. Сервер оператора:
 ```
 cd operators
 pip3 install -r requirements.txt
@@ -8,7 +8,7 @@ python3 manage.py createsuperuser # создаёте пользователя
 python3 manage.py runserver 0.0.0.0:8000
 ```
 
-## Приложение крана:
+## Б. Приложение крана:
 `cd flask-app`
 
 выставить в файле app.py `SERVER_URL = 'http://yourserver:8000'`
@@ -22,3 +22,10 @@ sudo apt install memcached
 python3 video_capture.py
 python3 app.py
 ```
+
+# Работа с системой
+
+## Панель крановщика
+TODO
+
+...
