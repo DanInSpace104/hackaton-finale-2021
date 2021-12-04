@@ -71,12 +71,13 @@ def cargo_bg_thread():
             print('empty cargo room')
             return
         img = pickle.loads(mem.get('latest_frame'))
-        images = find_pepper(img)
+        percent, images = find_pepper(img)
         frames = []
         for name, img in images.items():
             frame = cv2.imencode('.jpg', img)[1].tobytes()
             frame = base64.encodebytes(frame).decode("utf-8")
             sio.emit('image_' + name, frame, to='cargo_room')
+        sio.emit('trash_percentage', percent, to='pepper_room')
         sio.sleep(0.2)
 
 
@@ -124,7 +125,7 @@ def gallery():
     mem = Client('localhost')
     while True:
         img = pickle.loads(mem.get('latest_frame'))
-        images = find_pepper(img)
+        _, images = find_pepper(img)
         for i, image in enumerate(images.values()):
             frame = cv2.imencode('.jpg', image)[1].tobytes()
             frame = base64.encodebytes(frame).decode("utf-8")
