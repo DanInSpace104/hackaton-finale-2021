@@ -14,8 +14,10 @@ python3 manage.py runserver 0.0.0.0:8000
 выставить в файле app.py `SERVER_URL = 'http://yourserver:8000'`
 например: `SERVER_URL = 'http://localhost:8000'`
 ```
-pip3 install -r requirements.txt
 sudo apt install memcached
+sudo apt install tesseract-ocr
+pip3 install Pillow
+pip3 install -r requirements.txt
 ```
 Следующие компоненты запустить параллельно, сначала **video_capture.py**. Это можно сделать в разных терминалах или при помощи **tmux**.
 ```
