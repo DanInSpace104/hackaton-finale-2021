@@ -75,7 +75,7 @@
                         <label>Номер состава</label>
                     </div>
                     <div class="card-body">
-                        <input type="text" name="trainnum">
+                        <input type="text" name="train">
                     </div>
                 </div>
                 <div class="col-3 card border-primary stick">
@@ -83,7 +83,7 @@
                         <label>Вес груза</label>
                     </div>
                     <div class="card-body">
-                        <input type="text" name="cargoweight" id="cargow">
+                        <input type="text" name="cargo_weight" id="cargow">
                     </div>
                 </div>
 
@@ -95,7 +95,7 @@
                         <label>Тип вагона</label>
                     </div>
                     <div class="card-body">
-                        <input type="text" name="carrtype">
+                        <input type="text" name="carriage_type">
                     </div>
                 </div>
                 <div class="col-3 card border-primary stick">
@@ -103,7 +103,7 @@
                         <label>Номер вагона</label>
                     </div>
                     <div class="card-body">
-                        <input type="text" name="carrnum" id="carrnum">
+                        <input type="text" name="carriage_number" id="carrnum">
                     </div>
                 </div>
             </div>
@@ -132,30 +132,28 @@
     function getRandInt(min, max) {
         min = Math.ceil(min)
         max = Math.floor(max)
-        return Math.floor(Math.random() * (max-min) + min)
+        return Math.floor(Math.random() * (max - min) + min)
     }
 
     socket.on('connect', function () {
-        socket.emit('check', {
-            data: 'User Connected'
-        })
+        socket.emit('join_pepper')
     });
-    socket.on('image1', function (msg) {
+    socket.on('image_result', function (msg) {
         const image_element = document.getElementById('image1');
         image_element.src = "data:image/jpeg;base64," + msg;
     });
-    socket.on('image2', function (msg) {
-        const image_element = document.getElementById('image2');
-        image_element.src = "data:image/jpeg;base64," + msg;
-    });
-    socket.on('number', function (msg) {
-        trnum = document.getElementById('carrnum')
-        crw = document.getElementById('cargow')
-        console.log(msg)
-        trnum.value = msg
-        crw.value = getRandInt(65000, 67000)
+    // socket.on('image2', function (msg) {
+    //     const image_element = document.getElementById('image2');
+    //     image_element.src = "data:image/jpeg;base64," + msg;
+    // });
+    // socket.on('number', function (msg) {
+    //     trnum = document.getElementById('carrnum')
+    //     crw = document.getElementById('cargow')
+    //     console.log(msg)
+    //     trnum.value = msg
+    //     crw.value = getRandInt(65000, 67000)
 
-    })
+    // })
 
 </script>
 

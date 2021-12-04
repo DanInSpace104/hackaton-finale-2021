@@ -39,14 +39,16 @@
 <body>
 
 
-    <img id="image1">
-    <img id="image2">
-    <img id="image3">
-    <img id="image4">
-    <img id="image5">
-    <img id="image6">
-    <img id="image7">
-    <img id="image8">
+    <img id="gallery0"><br>
+    <img id="gallery1"><br>
+    <img id="gallery2"><br>
+    <img id="gallery3"><br>
+    <img id="gallery4"><br>
+    <img id="gallery5"><br>
+    <img id="gallery6"><br>
+    <img id="gallery7"><br>
+    <img id="gallery8"><br>
+    <img id="gallery9"><br>
 
 
 </body>
@@ -54,34 +56,38 @@
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
     socket.on('connect', function () {
-        socket.emit('check', {
-            data: 'User Connected'
-        })
+        socket.emit('join_gallery')
     });
-    socket.on('image1', function (msg) {
-        const image_element = document.getElementById('image1');
+    socket.on('gallery1', function (msg) {
+        const image_element = document.getElementById('gallery1');
         image_element.src = "data:image/jpeg;base64," + msg;
     });
-    socket.on('image2', function (msg) {
-        const image_element = document.getElementById('image2');
+    socket.on('gallery2', function (msg) {
+        const image_element = document.getElementById('gallery2');
         image_element.src = "data:image/jpeg;base64," + msg;
-    }); socket.on('image3', function (msg) {
-        const image_element = document.getElementById('image3');
+    }); socket.on('gallery3', function (msg) {
+        const image_element = document.getElementById('gallery3');
         image_element.src = "data:image/jpeg;base64," + msg;
-    }); socket.on('image4', function (msg) {
-        const image_element = document.getElementById('image4');
+    }); socket.on('gallery4', function (msg) {
+        const image_element = document.getElementById('gallery4');
         image_element.src = "data:image/jpeg;base64," + msg;
-    }); socket.on('image5', function (msg) {
-        const image_element = document.getElementById('image5');
+    }); socket.on('gallery5', function (msg) {
+        const image_element = document.getElementById('gallery5');
         image_element.src = "data:image/jpeg;base64," + msg;
-    }); socket.on('image6', function (msg) {
-        const image_element = document.getElementById('image6');
+    }); socket.on('gallery6', function (msg) {
+        const image_element = document.getElementById('gallery6');
         image_element.src = "data:image/jpeg;base64," + msg;
-    }); socket.on('image7', function (msg) {
-        const image_element = document.getElementById('image7');
+    }); socket.on('gallery7', function (msg) {
+        const image_element = document.getElementById('gallery7');
         image_element.src = "data:image/jpeg;base64," + msg;
-    }); socket.on('image8', function (msg) {
-        const image_element = document.getElementById('image8');
+    }); socket.on('gallery8', function (msg) {
+        const image_element = document.getElementById('gallery8');
+        image_element.src = "data:image/jpeg;base64," + msg;
+    }); socket.on('gallery9', function (msg) {
+        const image_element = document.getElementById('gallery9');
+        image_element.src = "data:image/jpeg;base64," + msg;
+    }); socket.on('gallery0', function (msg) {
+        const image_element = document.getElementById('gallery0');
         image_element.src = "data:image/jpeg;base64," + msg;
     });
     socket.on('number', function (msg) {

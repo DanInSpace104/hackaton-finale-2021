@@ -115,9 +115,9 @@
                         Валерий
                     </div>
                 </div>
-                
+
             </div>
-            <div class = "col" style="float: right;">
+            <div class="col" style="float: right;">
                 <input type="submit" class="btn btn-lg btn-primary" value="Послать">
             </div>
         </form>
@@ -126,23 +126,21 @@
 
 </body>
 <script type="text/javascript">
-    var socket = io.connect('http://' + document.domain + ':' + location.port);NT
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
     function getRandInt(min, max) {
         min = Math.ceil(min)
         max = Math.floor(max)
-        return Math.floor(Math.random() * (max-min) + min)
+        return Math.floor(Math.random() * (max - min) + min)
     }
 
     socket.on('connect', function () {
-        socket.emit('check', {
-            data: 'User Connected'
-        })
+        socket.emit('join_cargo')
     });
-    socket.on('image', function (msg) {
+    socket.on('cargo_image', function (msg) {
         const image_element = document.getElementById('image1');
         image_element.src = "data:image/jpeg;base64," + msg;
     });
-    socket.on('number', function (msg) {
+    socket.on('cargo_num', function (msg) {
         trnum = document.getElementById('carrnum')
         crw = document.getElementById('cargow')
         console.log(msg)
