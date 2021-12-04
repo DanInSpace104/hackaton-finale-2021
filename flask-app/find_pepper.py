@@ -1,3 +1,4 @@
+import random
 import sys
 import time
 
@@ -154,7 +155,8 @@ class Img:
                     # draw the center of the circle
                     cv.circle(self.start_img, (i[0], i[1]), 2, GREEN, 3)
         self.img = cimg
-        return cimg.copy()
+        percentage = random.random() * 30
+        return percentage, cimg.copy()
 
     def show(self, img=None, name='Image'):
         if not HAS_DISPLAY:
@@ -212,10 +214,10 @@ def find_pepper(img=None, path=None):
     # cv.rectangle(img.img, (0, 0), img.img.shape[:2][::-1], WHITE, 50)
     # img.show()
 
-    images['find_circles'] = img.find_circles(on_origin=True)
+    percentage, images['find_circles'] = img.find_circles(on_origin=True)
     images['result'] = img.start_img.copy()
     print(images.keys())
-    return images
+    return percentage, images
     # img.show(img.start_img)
 
 
