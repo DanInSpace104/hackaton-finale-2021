@@ -72,12 +72,15 @@ def cargo_bg_thread():
             return
         img = pickle.loads(mem.get('latest_frame'))
         percent, images = find_pepper(img)
-        frames = []
-        for name, img in images.items():
-            frame = cv2.imencode('.jpg', img)[1].tobytes()
-            frame = base64.encodebytes(frame).decode("utf-8")
-            sio.emit('image_' + name, frame, to='cargo_room')
-        sio.emit('trash_percentage', percent, to='pepper_room')
+        img = images['result']
+        mem.set('vagon1:trash_percent', percent)
+        # for name, img in images.items():
+        frame = cv2.imencode('.jpg', img)[1].tobytes()
+        frame = base64.encodebytes(frame).decode("utf-8")
+
+        mem.set('vagon1:trash_image', frame)
+        sio.emit('cargo_image', frame, to='cargo_room')
+        # sio.emit('trash_percentage', percent, to='pepper_room')
         sio.sleep(0.2)
 
 
@@ -90,6 +93,7 @@ def weight_bg_thread():
         img = pickle.loads(mem.get('latest_frame'))
         frame = cv2.imencode('.jpg', img)[1].tobytes()
         frame = base64.encodebytes(frame).decode("utf-8")
+        mem.set('vagon1:number_image', frame)
         sio.emit('weight_image', frame, to='weight_room')
 
         num = get_sn_carriage(img)
@@ -120,17 +124,17 @@ def galerry():
     return render_template('gallery.html')
 
 
-@sio.on('join_gallery')
-def gallery():
-    mem = Client('localhost')
-    while True:
-        img = pickle.loads(mem.get('latest_frame'))
-        _, images = find_pepper(img)
-        for i, image in enumerate(images.values()):
-            frame = cv2.imencode('.jpg', image)[1].tobytes()
-            frame = base64.encodebytes(frame).decode("utf-8")
-            sio.emit('gallery' + str(i), frame)
-        sio.sleep(1)
+# @sio.on('join_gallery')
+# def gallery():
+#     mem = Client('localhost')
+#     while True:
+#         img = pickle.loads(mem.get('latest_frame'))
+#         _, images = find_pepper(img)
+#         for i, image in enumerate(images.values()):
+#             frame = cv2.imencode('.jpg', image)[1].tobytes()
+#             frame = base64.encodebytes(frame).decode("utf-8")
+#             sio.emit('gallery' + str(i), frame)
+#         sio.sleep(1)
 
 
 @app.route('/index', methods=['post'])
@@ -170,7 +174,6 @@ def indexpost():
 @app.route('/cdump')
 def cdump():
     return render_template('cargodump.html')
-
 
 
 if __name__ == '__main__':

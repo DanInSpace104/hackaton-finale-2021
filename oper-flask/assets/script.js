@@ -3,10 +3,26 @@ const stage = new Konva.Stage({
     width: 1500,
     height: 800,
 })
+let bg_layer = new Konva.Layer()
 
 const center = {x: stage.width()/2, y: stage.height()/2}
 
-let bg_layer = new Konva.Layer()
+var tmpImage = new Image();
+tmpImage.src = '/assets/mnemosheme.png';
+tmpImage.onload = function() {
+    var bgImage = new Konva.Image({
+        x: 0,
+        y: 0,
+        image: tmpImage,
+        width: stage.width(),
+        height: stage.height()
+    });
+    bg_layer.add(bgImage);
+    bg_layer.draw()
+};
+
+
+
 let anim_layer = new Konva.Layer()
 let static_layer = new Konva.Layer()
 
@@ -21,52 +37,29 @@ let outerFrame = new Konva.Rect({
 })
 bg_layer.add(outerFrame)
 
-// Пути поездов
-const trainLineParams = {
-    stroke: 'black',
-    strokeWidth: 15,
-    lineJoin: 'round',
-    dash: [4, 15, 4, 15],
-}
-let midTrainLine = new Konva.Line({
-    points: [0, center.y, stage.width(), center.y],
-    ...trainLineParams
-  });
-static_layer.add(midTrainLine)
-let topTrainLine = new Konva.Line({
-    points: [0, center.y, stage.width()/4, center.y-15, center.x, center.y/2, stage.width(), center.y/2-15],
-    tension: 0.3,
-    ...trainLineParams
-})
-static_layer.add(topTrainLine)
-let bottomTrainLine = new Konva.Line({
-    points: [0, center.y, stage.width()/4, center.y+15, center.x, center.y+center.y/2, stage.width(), center.y+center.y/2+15],
-    tension: 0.3,
-    ...trainLineParams
-})
-static_layer.add(bottomTrainLine)
 
-// краны
-const craneRectParams = {
-    width: 80,
-    height: 60,
-    stroke: 'black',
-    strokeWidth: 4,
-    fill: 'gray'
-}
-let midCrane = new Konva.Rect({
-    x: center.x,
-    y: center.y - 90,
-    ...craneRectParams
-})
-anim_layer.add(midCrane)
-// let midCrane = new Konva.Rect({
-//     x: center.x,
-//     y: center.y - 90,
-//     ...craneRectParams
-// })
-// anim_layer.add(midCrane)
+// Вагоны
+// const cartRectParams = {
 
+// }
+
+cartImageParams = {
+    width: 200,
+    height: 150,
+    image: new Image()
+}
+var thrashImage = new Konva.Image({
+    x: 200,
+    y: 50,
+    ...cartImageParams
+})
+anim_layer.add(thrashImage)
+var numberImage = new Konva.Image({
+    x: 500,
+    y: 200,
+    ...cartImageParams
+})
+anim_layer.add(numberImage)
 
 stage.add(bg_layer)
 stage.add(anim_layer)
