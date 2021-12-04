@@ -14,6 +14,19 @@ GREEN = (0, 255, 0)
 BLUE = (255, 0, 0)
 ic.disable()
 
+THICK = 3
+accum_size = 1
+# Minimum distance between the centers of the detected circles.
+minDist = 20
+# First method-specific parameter. In case of CV_HOUGH_GRADIENT , it is the higher threshold of the two passed to the Canny() edge detector (the lower one is twice smaller).
+param1 = 50
+# Second method-specific parameter. In case of CV_HOUGH_GRADIENT , it is the accumulator threshold for the circle centers at the detection stage. The smaller it is, the more false circles may be detected. Circles, corresponding to the larger accumulator values, will be returned first.
+param2 = 6
+#
+minRadius = 5
+#
+maxRadius = 35
+
 
 def wait_esc():
     while True:
@@ -75,7 +88,7 @@ class Img:
         (topy, topx) = (np.min(y), np.min(x))
         (bottomy, bottomx) = (np.max(y), np.max(x))
         out = out[topy : bottomy + 1, topx : bottomx + 1]
-        # cv.rectangle(out, (0, 0), self.img.shape[:2][::-1], WHITE, 40)
+        cv.rectangle(out, (0, 0), self.img.shape[:2][::-1], WHITE, 40)
         self.img = out
 
         h, w = out.shape[:2]
@@ -91,7 +104,7 @@ class Img:
     def threshold(self, mask=None):
         mask = mask or self.img
         self.img = cv.threshold(mask, 60, 255, cv.THRESH_BINARY)[1]
-        return self.img
+        return self.img.copy()
 
     def get_mask(self):
         hsv = cv.cvtColor(self.img, cv.COLOR_BGR2HSV)
@@ -99,26 +112,16 @@ class Img:
         upper = np.array([128, 255, 255])
         self.mask = cv.inRange(hsv, lower, upper)
         self.img = self.mask
-        return self.mask
+        return self.mask.copy()
 
     def thick_white_contours(self, img=None):
         img = img or self.img
         contours, hierarchy = cv2.findContours(img.astype(np.uint8), 1, 2)
-        cv2.drawContours(img, contours, -1, (255, 255, 255), thickness=3)
+        cv2.drawContours(img, contours, -1, (255, 255, 255), thickness=THICK)
         return img, contours, hierarchy
 
     def find_circles(self, img=None, on_origin=False):
-        accum_size = 1
-        # Minimum distance between the centers of the detected circles.
-        minDist = 20
-        # First method-specific parameter. In case of CV_HOUGH_GRADIENT , it is the higher threshold of the two passed to the Canny() edge detector (the lower one is twice smaller).
-        param1 = 50
-        # Second method-specific parameter. In case of CV_HOUGH_GRADIENT , it is the accumulator threshold for the circle centers at the detection stage. The smaller it is, the more false circles may be detected. Circles, corresponding to the larger accumulator values, will be returned first.
-        param2 = 6
-        #
-        minRadius = 5
-        #
-        maxRadius = 35
+
         img = img or self.img
         cimg = cv.cvtColor(img, cv.COLOR_GRAY2BGR)
         circles = cv.HoughCircles(
@@ -167,18 +170,19 @@ class Img:
 
     def center(self):
         h, w = self.img.shape[:2]
-        return (h/2, w/2)
+        return (h / 2, w / 2)
 
     def draw_sniper(self):
         center = self.center()
+        img = self.img.copy()
         # print(center, self.img.shape)
-        point2 = tuple(map(int, (center[0]-30, center[1] - 50)))[::-1]
-        point1 = tuple(map(int, (center[0]+30, center[1] + 50)))[::-1]
+        point2 = tuple(map(int, (center[0] - 30, center[1] - 50)))[::-1]
+        point1 = tuple(map(int, (center[0] + 30, center[1] + 50)))[::-1]
         # point2 = (center[0]+30, center[1] + 30)
         # print(type(point1), point2)
 
-        cv2.rectangle(self.img, point1, point2, color=RED, thickness=4)
-        return self.img.copy()
+        cv2.rectangle(img, point1, point2, color=RED, thickness=4)
+        return img
         # print(type(center), center)
         # center = (150, 100)
         # print(type(center), center)
@@ -186,24 +190,31 @@ class Img:
 
 
 def find_pepper(img=None, path=None):
-    images = []
+    images = {}
     img = Img(img=img, path=path)
-    images.append(img.start_img.copy())
+    # images['start'] = img.start_img.copy()
     # images.append(img.draw_sniper())
-    images.append(img.preprocess())
+    image = img.preprocess()
+    images['preprocess'] = image
+    # images['scope'] = img.draw_sniper()
     mask = img.get_mask()
-    images.append(mask.copy())
-
+    # images['mask'] = mask.copy()
     thr = img.threshold()
-    images.append(thr.copy())
+    images['thresh'] = thr.copy()
 
-    images.append(img.cut_cart())
+    images['cut_cart'] = img.cut_cart()
+    # images['before_cut'] = img.img.copy()
+    tmp = img.cut_cart()
+    # images['after_cut'] = tmp
     img.thick_white_contours()
+    # images['thick_contours'] = tmp
     # img.show()
     # cv.rectangle(img.img, (0, 0), img.img.shape[:2][::-1], WHITE, 50)
     # img.show()
 
-    images.append(img.find_circles(on_origin=True))
+    images['find_circles'] = img.find_circles(on_origin=True)
+    images['result'] = img.start_img.copy()
+    print(images.keys())
     return images
     # img.show(img.start_img)
 
